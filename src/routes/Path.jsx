@@ -7,7 +7,7 @@ import LayProgramaPage from "../layouts/LayProgramaPage";
 
 
 import Login from "../componentes/SignInSignOut/Login";
-import Codigo from "../componentes/SignInSignOut/Codigo.JSX";
+import Codigo from "../componentes/SignInSignOut/Codigo";
 import UserPage from "../pages/UserPage";
 import ProgramaPage from "../pages/ProgramaPage";
 
