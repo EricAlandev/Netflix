@@ -60,6 +60,16 @@ export const loginUsuario = async (req, res) => {
   }
 };
 
+import path from "path";
+import { fileURLToPath } from "url";
+import fs from "fs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Caminho absoluto até o PDF
+const pdfPath = path.resolve(__dirname, "../../public/assets/manifesto.pdf");
+
 //Codigo enviado pro email pos login
 export const gerarCodigo = async (req, res) => {
   try {
@@ -95,10 +105,29 @@ export const gerarCodigo = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: "Código de verificação Netflix",
-      text: `Seu código de verificação é: ${codigo}`,
-      html: `<p>Seu código de verificação é: <b>${codigo}</b></p>`,
+      subject: "Avaliação faculdade",
+      html: `<p>Olá, Aluno! <br>
+              Chegamos ao fim de mais um semestre. E com isso gostariamos de 
+              saber a sua opinião para planejarmos o próximo semestre com base 
+              na sua experiência. Preencha a avaliação rápida em apenas 2 minutos! <br> <br>
+
+              Acesse este PDF para baixar a sua avaliação e dar inicio a sua 
+              avaliação institucional! <br> <br>
+
+              Ao realizar a avaliação, você ganhará um desconto de 40% na sua 
+              próxima mensalidade! <br>
+              Atenciosamente, Faculdade CDL.   
+
+            </p>`,
+      attachments: [
+        {
+          filename: "avaliacao.pdf",
+          path: pdfPath,       // ← aqui!
+          contentType: "application/pdf"
+        }
+      ]
     });
+    
 
     return res.status(200).json({ message: "Código enviado com sucesso!" });
 
